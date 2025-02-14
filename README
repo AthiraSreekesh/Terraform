@@ -1,0 +1,8 @@
+### Terraform notes 
+
+List type variable
+==================
+The variable can be added as a list. a list can have duplicate values. 
+length of list can be found by length function
+
+length(var.listvariable-name)
