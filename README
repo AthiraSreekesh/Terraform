@@ -6,3 +6,15 @@ The variable can be added as a list. a list can have duplicate values.
 length of list can be found by length function
 
 length(var.listvariable-name)
+
+resource "aws_security_group_rule" "frontend_sg_rule_https" {
+  count = length(var.sg_ports)
+  from_port         = var.sg_ports[count.index]
+  to_port           = var.sg_ports[count.index]
+  protocol          = "tcp"
+  type              = "ingress"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.frontend_sg.id
+}
+
+count.index starts at 0
