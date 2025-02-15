@@ -16,9 +16,9 @@ resource "aws_security_group" "frontend_sg" {
 }
 
 resource "aws_security_group_rule" "frontend_sg_rule_https" {
-  count             = length(var.sg_ports)
-  from_port         = var.sg_ports[count.index]
-  to_port           = var.sg_ports[count.index]
+  for_each          = toset(var.sg_ports)
+  from_port         = each.key
+  to_port           = each.key
   protocol          = "tcp"
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]

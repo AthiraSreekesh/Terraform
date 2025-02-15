@@ -18,3 +18,29 @@ resource "aws_security_group_rule" "frontend_sg_rule_https" {
 }
 
 count.index starts at 0
+
+Class 12
+
+For each loop , instead of count.
+
+The array in for each should be a set. And the elements cannot be repeated. 
+
+We cannot create a set variable. We can convert a list array to set using toset function. The variable should be encoded in quotes. 
+
+
+resource "aws_security_group_rule" "frontend_sg_rule_https" {
+  for_each          = toset(var.sg_ports)  >>> convert the list to set using toset
+  from_port         = each.key
+  to_port           = each.key
+  protocol          = "tcp"
+  type              = "ingress"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.frontend_sg.id
+}
+
+sg_ports              = ["80", "443"]  >>> here the value should be added in quotes. 
+
+When we use count, the result is stored in a list.
+But whne we use for each, the results are stored as key value paires , where the key is sg rule id and value is the port number. 
+So, even if we add new port in middle, thiswont effect the existing sg rules. 
+
